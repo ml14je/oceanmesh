@@ -648,7 +648,7 @@ class DEM(Grid):
     1001 points in both horizontal directions.
     """
 
-    def __init__(self, dem, crs=4326, bbox=None, nnodes=1000):
+    def __init__(self, dem, crs=4326, bbox=None, resolution=1e-3):
         if type(dem) == str:
             basename, ext = os.path.splitext(dem)
             if ext.lower() in [".nc"] or [".tif"]:
@@ -669,7 +669,7 @@ class DEM(Grid):
             self.dem = "input"
 
         elif callable(dem):  # if input is a function
-            dx = (bbox[1] - bbox[0]) / nnodes
+            dx = resolution
             lon, lat = np.arange(bbox[0], bbox[1] + dx, dx), np.arange(
                 bbox[2], bbox[3] + dx, dx
             )

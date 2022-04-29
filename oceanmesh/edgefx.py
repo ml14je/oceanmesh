@@ -98,6 +98,7 @@ def enforce_mesh_gradation(grid, gradation=0.15, crs=4326):
         A grid ojbect with its values field gradient limited
 
     """
+
     if gradation < 0:
         raise ValueError("Parameter `gradation` must be > 0.0")
     if gradation > 1.0:
@@ -292,6 +293,7 @@ def bathymetric_gradient_sizing_function(
     # Calculating the slope function
     eps = 1e-10  # small number to approximate derivative
     dp = np.maximum(1, tmpz)
+    
     grid.values = (2 * np.pi / slope_parameter) * dp / (bs + eps)
 
     if max_edge_length is not None:
@@ -299,8 +301,6 @@ def bathymetric_gradient_sizing_function(
 
     if min_edge_length is None:
         min_edge_length = grid.dx
-
-    grid.values[grid.values < min_edge_length] = min_edge_length
 
     grid.build_interpolant()
 
